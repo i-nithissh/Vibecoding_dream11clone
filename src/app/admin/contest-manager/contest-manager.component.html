@@ -1,0 +1,195 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Contest Management</h1>
+    <p>Create and manage fantasy contests</p>
+  </div>
+
+  <div class="action-buttons">
+    <button 
+      class="btn btn-primary" 
+      (click)="showAddForm = !showAddForm"
+    >
+      {{showAddForm ? 'Cancel' : 'Create New Contest'}}
+    </button>
+  </div>
+
+  <!-- Add Contest Form -->
+  <div class="add-contest-form" *ngIf="showAddForm">
+    <h3>Create New Contest</h3>
+    <form (ngSubmit)="addContest()" #contestForm="ngForm">
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label for="name">Contest Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            [(ngModel)]="newContest.name"
+            name="name"
+            placeholder="Enter contest name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="matchId">Select Match</label>
+          <select 
+            id="matchId" 
+            [(ngModel)]="newContest.matchId"
+            name="matchId"
+            required
+          >
+            <option value="">Select a match</option>
+            <option *ngFor="let match of matches" [value]="match.id">{{match.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="form-group">
+          <label for="entryFee">Entry Fee (₹)</label>
+          <input 
+            type="number" 
+            id="entryFee" 
+            [(ngModel)]="newContest.entryFee"
+            name="entryFee"
+            placeholder="0"
+            min="0"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="totalSpots">Total Spots</label>
+          <input 
+            type="number" 
+            id="totalSpots" 
+            [(ngModel)]="newContest.totalSpots"
+            name="totalSpots"
+            placeholder="0"
+            min="2"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="prizePool">Prize Pool (₹)</label>
+          <input 
+            type="number" 
+            id="prizePool" 
+            [(ngModel)]="newContest.prizePool"
+            name="prizePool"
+            placeholder="0"
+            min="0"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create Contest</button>
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Contests List -->
+  <div class="contests-grid">
+    <div class="contest-card" *ngFor="let contest of contests">
+      <!-- Edit Form -->
+      <div class="edit-form" *ngIf="editingContest?.id === contest.id">
+        <h4>Edit Contest</h4>
+        <form (ngSubmit)="updateContest()">
+          <div class="form-group">
+            <label>Contest Name</label>
+            <input type="text" [(ngModel)]="editingContest.name" name="editName" />
+          </div>
+
+          <div class="grid grid-2">
+            <div class="form-group">
+              <label>Entry Fee (₹)</label>
+              <input type="number" [(ngModel)]="editingContest.entryFee" name="editEntryFee" />
+            </div>
+
+            <div class="form-group">
+              <label>Total Spots</label>
+              <input type="number" [(ngModel)]="editingContest.totalSpots" name="editTotalSpots" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Prize Pool (₹)</label>
+            <input type="number" [(ngModel)]="editingContest.prizePool" name="editPrizePool" />
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="editingContest.status" name="editStatus">
+              <option value="ACTIVE">Active</option>
+              <option value="PAUSED">Paused</option>
+              <option value="COMPLETED">Completed</option>
+              <option value="CANCELLED">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="edit-actions">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Regular Card -->
+      <div class="card-content" *ngIf="editingContest?.id !== contest.id">
+        <div class="contest-header">
+          <div class="contest-info">
+            <h3>{{contest.name}}</h3>
+            <p class="match-name">{{contest.matchName}}</p>
+          </div>
+          <span class="status-badge" [class]="getStatusClass(contest.status)">
+            {{contest.status}}
+          </span>
+        </div>
+
+        <div class="contest-stats">
+          <div class="stat-item">
+            <span class="label">Entry Fee</span>
+            <span class="value">₹{{contest.entryFee}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="label">Prize Pool</span>
+            <span class="value">₹{{contest.prizePool}}</span>
+          </div>
+        </div>
+
+        <div class="spots-info">
+          <div class="spots-text">
+            <span>{{contest.filledSpots}}/{{contest.totalSpots}} spots filled</span>
+            <span>{{getProgressPercentage(contest.filledSpots, contest.totalSpots)}}%</span>
+          </div>
+          <div class="progress-bar">
+            <div 
+              class="progress-fill" 
+              [style.width.%]="getProgressPercentage(contest.filledSpots, contest.totalSpots)"
+            ></div>
+          </div>
+        </div>
+
+        <div class="contest-actions">
+          <button class="btn btn-secondary" (click)="editContest(contest)">
+            Edit
+          </button>
+          <button class="btn btn-danger" (click)="deleteContest(contest.id)">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="contests.length === 0">
+    <h3>No contests found</h3>
+    <p>Create your first contest to get started</p>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="team-builder-header">
+    <h1>Create Your Team</h1>
+    <div class="team-stats">
+      <div class="stat-item">
+        <span class="label">Players Selected</span>
+        <span class="value">{{selectedPlayers.length}}/11</span>
+      </div>
+      <div class="stat-item">
+        <span class="label">Credits Left</span>
+        <span class="value">{{totalCredits - usedCredits}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-builder-content">
+    <div class="player-selection">
+      <div class="role-tabs">
+        <button 
+          *ngFor="let role of ['WK', 'BAT', 'ALL', 'BOWL']"
+          class="role-tab"
+          [class.active]="activeTab === role"
+          (click)="activeTab = role"
+        >
+          {{role}} ({{getPlayersByRole(role).filter(p => p.selected).length}})
+        </button>
+      </div>
+
+      <div class="players-list">
+        <div 
+          class="player-card"
+          *ngFor="let player of getPlayersByRole(activeTab)"
+          [class.selected]="player.selected"
+          [class.captain]="player.isCaptain"
+          [class.vice-captain]="player.isViceCaptain"
+          (click)="togglePlayer(player)"
+        >
+          <div class="player-info">
+            <div class="player-name">{{player.name}}</div>
+            <div class="player-team">{{player.team}}</div>
+            <div class="player-points">{{player.points}} pts</div>
+          </div>
+          <div class="player-credits">{{player.credits}}</div>
+          
+          <div class="captain-actions" *ngIf="player.selected">
+            <button 
+              class="btn-captain"
+              [class.selected]="player.isCaptain"
+              (click)="setCaptain(player); $event.stopPropagation()"
+            >
+              C
+            </button>
+            <button 
+              class="btn-vice-captain"
+              [class.selected]="player.isViceCaptain"
+              (click)="setViceCaptain(player); $event.stopPropagation()"
+            >
+              VC
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="selected-team">
+      <h3>My Team ({{selectedPlayers.length}}/11)</h3>
+      
+      <div class="selected-players" *ngIf="selectedPlayers.length > 0">
+        <div 
+          class="selected-player"
+          *ngFor="let player of selectedPlayers"
+          [class.captain]="player.isCaptain"
+          [class.vice-captain]="player.isViceCaptain"
+        >
+          <div class="player-details">
+            <span class="name">{{player.name}}</span>
+            <span class="role-badge">{{player.role}}</span>
+            <span class="captain-badge" *ngIf="player.isCaptain">C</span>
+            <span class="vice-captain-badge" *ngIf="player.isViceCaptain">VC</span>
+          </div>
+          <div class="credits">{{player.credits}}</div>
+          <button class="remove-btn" (click)="deselectPlayer(player)">×</button>
+        </div>
+      </div>
+
+      <div class="empty-team" *ngIf="selectedPlayers.length === 0">
+        <p>Start selecting players to build your team</p>
+      </div>
+
+      <div class="team-actions" *ngIf="selectedPlayers.length === 11">
+        <button class="btn btn-primary" (click)="saveTeam()">
+          Save Team & Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

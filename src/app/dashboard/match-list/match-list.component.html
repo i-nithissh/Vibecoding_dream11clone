@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Upcoming Matches</h1>
+    <p>Choose a match to create your dream team</p>
+  </div>
+
+  <div class="matches-grid">
+    <div class="match-card" *ngFor="let match of matches">
+      <div class="match-header">
+        <span class="contest-name">{{match.contest}}</span>
+        <span class="match-status status-{{match.status.toLowerCase()}}">{{match.status}}</span>
+      </div>
+
+      <div class="teams-section">
+        <div class="team">
+          <img [src]="match.team1Logo" [alt]="match.team1" class="team-logo">
+          <span class="team-name">{{match.team1}}</span>
+        </div>
+        
+        <div class="vs">VS</div>
+        
+        <div class="team">
+          <img [src]="match.team2Logo" [alt]="match.team2" class="team-logo">
+          <span class="team-name">{{match.team2}}</span>
+        </div>
+      </div>
+
+      <div class="match-info">
+        <div class="match-time">{{match.date}}</div>
+        <div class="contests-count">{{match.contestsCount}} Contests</div>
+      </div>
+
+      <div class="match-actions">
+        <button class="btn btn-primary" (click)="createTeam(match.id)">
+          Create Team
+        </button>
+        <button class="btn btn-secondary" (click)="viewContests(match.id)">
+          View Contests
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.withdraw-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.balance-info {
+  margin-bottom: 30px;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.balance-header h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.balance-amount {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.balance-note {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.balance-note p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.withdrawal-form {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.form-section h3 {
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.withdrawal-summary {
+  border-top: 2px solid #eee;
+  padding-top: 25px;
+}
+
+.withdrawal-summary h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.summary-details {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.summary-row.total {
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+  padding-top: 15px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.summary-row .amount {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.summary-row .fee {
+  color: #666;
+}
+
+.withdrawal-notes {
+  background: #e3f2fd;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.withdrawal-notes h4 {
+  margin: 0 0 15px 0;
+  color: #1976d2;
+}
+
+.withdrawal-notes ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.withdrawal-notes li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.withdraw-btn {
+  width: 100%;
+  font-size: 18px;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.withdraw-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .summary-row {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+}

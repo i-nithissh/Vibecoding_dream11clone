@@ -1,0 +1,127 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Add Money</h1>
+    <p>Add funds to your wallet securely</p>
+  </div>
+
+  <div class="add-money-content">
+    <div class="amount-selection">
+      <div class="section-title">Select Amount</div>
+      
+      <div class="quick-amounts">
+        <button 
+          class="amount-btn"
+          *ngFor="let amount of quickAmounts"
+          [class.selected]="selectedAmount === amount"
+          (click)="selectAmount(amount)"
+        >
+          ₹{{amount}}
+        </button>
+      </div>
+
+      <div class="custom-amount">
+        <label for="customAmount">Or enter custom amount</label>
+        <input 
+          type="number" 
+          id="customAmount"
+          [(ngModel)]="customAmount"
+          placeholder="Enter amount"
+          (input)="onCustomAmountChange()"
+          min="10"
+          max="50000"
+        />
+      </div>
+    </div>
+
+    <div class="payment-methods">
+      <div class="section-title">Payment Method</div>
+      
+      <div class="payment-options">
+        <label class="payment-option">
+          <input 
+            type="radio" 
+            name="paymentMethod" 
+            value="card"
+            [(ngModel)]="paymentMethod"
+          />
+          <div class="option-content">
+            <div class="option-icon">💳</div>
+            <div class="option-details">
+              <div class="option-name">Credit/Debit Card</div>
+              <div class="option-desc">Visa, Mastercard, Rupay</div>
+            </div>
+          </div>
+        </label>
+
+        <label class="payment-option">
+          <input 
+            type="radio" 
+            name="paymentMethod" 
+            value="netbanking"
+            [(ngModel)]="paymentMethod"
+          />
+          <div class="option-content">
+            <div class="option-icon">🏦</div>
+            <div class="option-details">
+              <div class="option-name">Net Banking</div>
+              <div class="option-desc">All major banks supported</div>
+            </div>
+          </div>
+        </label>
+
+        <label class="payment-option">
+          <input 
+            type="radio" 
+            name="paymentMethod" 
+            value="upi"
+            [(ngModel)]="paymentMethod"
+          />
+          <div class="option-content">
+            <div class="option-icon">📱</div>
+            <div class="option-details">
+              <div class="option-name">UPI</div>
+              <div class="option-desc">Google Pay, PhonePe, Paytm</div>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="payment-summary">
+      <div class="section-title">Payment Summary</div>
+      
+      <div class="summary-details">
+        <div class="summary-row">
+          <span>Amount to add:</span>
+          <span class="amount">₹{{getFinalAmount()}}</span>
+        </div>
+        <div class="summary-row">
+          <span>Payment method:</span>
+          <span class="method">{{paymentMethod | titlecase}}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span class="amount">₹{{getFinalAmount()}}</span>
+        </div>
+      </div>
+
+      <div class="security-notice">
+        <div class="notice-icon">🔒</div>
+        <div class="notice-text">
+          Your payment is secured with 256-bit SSL encryption
+        </div>
+      </div>
+
+      <button 
+        class="btn btn-primary add-money-btn"
+        [disabled]="isProcessing || getFinalAmount() <= 0"
+        (click)="addMoney()"
+      >
+        <span *ngIf="!isProcessing">Add ₹{{getFinalAmount()}} to Wallet</span>
+        <span *ngIf="isProcessing">Processing Payment...</span>
+      </button>
+    </div>
+  </div>
+</div>

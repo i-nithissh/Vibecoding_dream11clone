@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back! Ready to create winning teams?</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Upcoming Matches</h3>
+      <div class="match-list">
+        <div class="match-item" *ngFor="let match of upcomingMatches">
+          <div class="match-info">
+            <div class="teams">{{match.team1}} vs {{match.team2}}</div>
+            <div class="match-time">{{match.date}}</div>
+            <div class="contest-name">{{match.contest}}</div>
+          </div>
+          <button class="btn btn-primary" (click)="createTeam(match.id)">
+            Create Team
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-secondary view-all" (click)="viewContests()">
+        View All Contests
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>My Teams</h3>
+      <div class="team-list" *ngIf="myTeams.length > 0">
+        <div class="team-item" *ngFor="let team of myTeams">
+          <div class="team-info">
+            <div class="team-name">{{team.teamName}}</div>
+            <div class="team-details">
+              <span>C: {{team.captain}}</span>
+              <span>VC: {{team.viceCaptain}}</span>
+            </div>
+            <div class="team-points">Points: {{team.points}}</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="myTeams.length === 0" class="empty-state">
+        <p>No teams created yet</p>
+        <p>Create your first team to get started!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <h3>Quick Actions</h3>
+    <div class="action-buttons">
+      <button class="btn btn-primary" routerLink="/matches">View Matches</button>
+      <button class="btn btn-primary" routerLink="/contests">Join Contests</button>
+      <button class="btn btn-secondary" routerLink="/wallet">Manage Wallet</button>
+      <button class="btn btn-secondary" routerLink="/profile">View Profile</button>
+    </div>
+  </div>
+</div>

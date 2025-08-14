@@ -1,0 +1,107 @@
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.dashboard-header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.match-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.match-info .teams {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.match-info .match-time {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.match-info .contest-name {
+  color: #28a745;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.team-item {
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.team-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.team-details {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.team-details span {
+  margin-right: 15px;
+}
+
+.team-points {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.empty-state {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.view-all {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.quick-actions {
+  margin-top: 40px;
+}
+
+.quick-actions h3 {
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .match-item {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

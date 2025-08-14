@@ -1,0 +1,70 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>My Wallet</h1>
+    <p>Manage your funds and view transaction history</p>
+  </div>
+
+  <div class="wallet-overview">
+    <div class="balance-card total">
+      <div class="balance-header">
+        <h3>Total Balance</h3>
+        <div class="balance-amount">₹{{walletData.totalBalance}}</div>
+      </div>
+      <div class="balance-actions">
+        <button class="btn btn-primary" (click)="addMoney()">Add Money</button>
+        <button class="btn btn-secondary" (click)="withdrawMoney()">Withdraw</button>
+      </div>
+    </div>
+
+    <div class="balance-breakdown">
+      <div class="balance-item">
+        <div class="balance-label">Winnings</div>
+        <div class="balance-value winnings">₹{{walletData.winnings}}</div>
+      </div>
+      <div class="balance-item">
+        <div class="balance-label">Deposits</div>
+        <div class="balance-value deposits">₹{{walletData.deposits}}</div>
+      </div>
+      <div class="balance-item">
+        <div class="balance-label">Bonus</div>
+        <div class="balance-value bonus">₹{{walletData.bonus}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="transactions-section">
+    <div class="section-header">
+      <h3>Recent Transactions</h3>
+      <div class="filter-buttons">
+        <button class="btn btn-secondary active">All</button>
+        <button class="btn btn-secondary">Deposits</button>
+        <button class="btn btn-secondary">Withdrawals</button>
+        <button class="btn btn-secondary">Winnings</button>
+      </div>
+    </div>
+
+    <div class="transactions-list">
+      <div class="transaction-item" *ngFor="let transaction of transactions">
+        <div class="transaction-icon">
+          {{getTransactionIcon(transaction.type)}}
+        </div>
+        <div class="transaction-details">
+          <div class="transaction-description">{{transaction.description}}</div>
+          <div class="transaction-date">{{transaction.date}}</div>
+          <div class="transaction-status status-{{transaction.status.toLowerCase()}}">
+            {{transaction.status}}
+          </div>
+        </div>
+        <div class="transaction-amount" [style.color]="getTransactionColor(transaction.amount)">
+          {{transaction.amount > 0 ? '+' : ''}}₹{{Math.abs(transaction.amount)}}
+        </div>
+      </div>
+    </div>
+
+    <div class="load-more">
+      <button class="btn btn-secondary">Load More Transactions</button>
+    </div>
+  </div>
+</div>

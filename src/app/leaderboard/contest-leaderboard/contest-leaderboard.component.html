@@ -1,0 +1,87 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Contest Leaderboard</h1>
+    <div class="contest-info">
+      <h2>{{contest.name}}</h2>
+      <p>{{contest.matchName}}</p>
+      <div class="contest-stats">
+        <span class="stat">{{contest.totalParticipants}} Participants</span>
+        <span class="stat">₹{{contest.prizePool}} Prize Pool</span>
+        <span class="status status-{{contest.status.toLowerCase()}}">{{contest.status}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="leaderboard-actions">
+    <button class="btn btn-secondary" (click)="refreshLeaderboard()">
+      🔄 Refresh
+    </button>
+  </div>
+
+  <div class="leaderboard-container">
+    <div class="leaderboard-header">
+      <div class="header-item">Rank</div>
+      <div class="header-item">User</div>
+      <div class="header-item">Points</div>
+      <div class="header-item">Prize</div>
+    </div>
+
+    <div class="leaderboard-list">
+      <div 
+        class="leaderboard-item"
+        *ngFor="let entry of leaderboardData"
+        [class.current-user]="entry.isCurrentUser"
+        [class.top-rank]="entry.rank <= 3"
+      >
+        <div class="rank-column">
+          <div class="rank-number" [class]="getRankClass(entry.rank)">
+            <span class="rank-icon" *ngIf="entry.rank <= 3">{{getRankIcon(entry.rank)}}</span>
+            <span *ngIf="entry.rank > 3">#{{entry.rank}}</span>
+          </div>
+        </div>
+
+        <div class="user-column">
+          <div class="username">{{entry.username}}</div>
+          <div class="team-name">{{entry.teamName}}</div>
+        </div>
+
+        <div class="points-column">
+          <div class="points">{{entry.points}}</div>
+          <div class="points-label">points</div>
+        </div>
+
+        <div class="prize-column">
+          <div class="prize">₹{{entry.prize}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="load-more" *ngIf="leaderboardData.length < contest.totalParticipants">
+      <button class="btn btn-secondary">Load More</button>
+    </div>
+  </div>
+
+  <div class="prize-distribution-summary">
+    <h3>Prize Distribution</h3>
+    <div class="prize-summary">
+      <div class="prize-item">
+        <span class="position">1st Place</span>
+        <span class="amount">₹3,000</span>
+      </div>
+      <div class="prize-item">
+        <span class="position">2nd Place</span>
+        <span class="amount">₹2,000</span>
+      </div>
+      <div class="prize-item">
+        <span class="position">3rd Place</span>
+        <span class="amount">₹1,500</span>
+      </div>
+      <div class="prize-item">
+        <span class="position">Top 10%</span>
+        <span class="amount">₹100+</span>
+      </div>
+    </div>
+  </div>
+</div>

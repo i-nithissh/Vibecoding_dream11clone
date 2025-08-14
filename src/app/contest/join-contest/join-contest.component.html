@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Join Contest</h1>
+    <p>{{contest.matchName}}</p>
+  </div>
+
+  <div class="contest-details-card">
+    <div class="contest-header">
+      <div class="contest-info">
+        <h2>{{contest.name}}</h2>
+        <div class="contest-stats">
+          <div class="stat">
+            <span class="label">Prize Pool</span>
+            <span class="value">₹{{contest.prizePool}}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Entry Fee</span>
+            <span class="value">₹{{contest.entryFee}}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Winners</span>
+            <span class="value">{{contest.winnerPercentage}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="spots-info">
+        <span>{{contest.filledSpots}}/{{contest.totalSpots}} spots filled</span>
+        <span>{{contest.totalSpots - contest.filledSpots}} spots left</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+      </div>
+    </div>
+
+    <div class="prize-distribution">
+      <h3>Prize Distribution</h3>
+      <div class="prizes-list">
+        <div class="prize-item" *ngFor="let prize of contest.prizeDistribution">
+          <span class="rank">{{prize.rank}}</span>
+          <span class="amount">₹{{prize.prize}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-selection-card">
+    <h3>Select Your Team</h3>
+    
+    <div class="team-options" *ngIf="myTeams.length > 0">
+      <div 
+        class="team-option"
+        *ngFor="let team of myTeams"
+        [class.selected]="selectedTeam?.id === team.id"
+        (click)="selectedTeam = team"
+      >
+        <div class="team-info">
+          <div class="team-name">{{team.name}}</div>
+          <div class="team-details">
+            <span>C: {{team.captain}}</span>
+            <span>VC: {{team.viceCaptain}}</span>
+          </div>
+        </div>
+        <div class="selection-indicator" *ngIf="selectedTeam?.id === team.id">✓</div>
+      </div>
+    </div>
+
+    <div class="no-teams" *ngIf="myTeams.length === 0">
+      <p>You don't have any teams for this match</p>
+      <button class="btn btn-secondary" (click)="createNewTeam()">
+        Create Team
+      </button>
+    </div>
+
+    <div class="team-actions" *ngIf="myTeams.length > 0">
+      <button class="btn btn-secondary" (click)="createNewTeam()">
+        Create New Team
+      </button>
+      <button 
+        class="btn btn-primary"
+        [disabled]="isLoading"
+        (click)="joinContest()"
+      >
+        <span *ngIf="!isLoading">Join Contest</span>
+        <span *ngIf="isLoading">Joining...</span>
+      </button>
+    </div>
+  </div>
+</div>

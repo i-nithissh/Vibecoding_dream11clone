@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Available Contests</h1>
+    <p>Join contests and win exciting prizes</p>
+  </div>
+
+  <div class="contest-filters">
+    <div class="filter-buttons">
+      <button class="btn btn-primary active">All</button>
+      <button class="btn btn-secondary">Free</button>
+      <button class="btn btn-secondary">Low Entry</button>
+      <button class="btn btn-secondary">High Entry</button>
+    </div>
+  </div>
+
+  <div class="contests-list">
+    <div class="contest-card" *ngFor="let contest of contests">
+      <div class="contest-header">
+        <div class="contest-info">
+          <h3>{{contest.name}}</h3>
+          <p class="match-name">{{contest.matchName}}</p>
+        </div>
+        <div class="prize-info">
+          <div class="prize-pool">₹{{contest.prizePool}}</div>
+          <div class="first-prize">1st Prize: ₹{{contest.firstPrize}}</div>
+        </div>
+      </div>
+
+      <div class="contest-details">
+        <div class="detail-item">
+          <span class="label">Entry Fee</span>
+          <span class="value">₹{{contest.entryFee}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Spots Filled</span>
+          <span class="value">{{contest.filledSpots}}/{{contest.totalSpots}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Winners</span>
+          <span class="value">{{contest.winnerPercentage}}%</span>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="getProgressPercentage(contest.filledSpots, contest.totalSpots)"></div>
+        </div>
+        <p class="spots-left">{{contest.totalSpots - contest.filledSpots}} spots left</p>
+      </div>
+
+      <div class="contest-actions">
+        <button class="btn btn-primary" (click)="joinContest(contest.id)">
+          Join Contest
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
